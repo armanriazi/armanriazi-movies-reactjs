@@ -1,0 +1,5 @@
+{
+  "apiUrl": "https://armanriazi-vidly-api.herokuapp.com/api",
+  "Access-Control-Allow-Origin": "*",
+  "Allow-Control-Allow-Methods": "*"
+}
