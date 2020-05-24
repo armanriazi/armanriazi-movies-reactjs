@@ -8,12 +8,12 @@ class MoviesTable extends Component {
   columns = [
     {
       path: "title",
-      label: "Title",
+      label: "عنوان",
       content: movie => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
     },
-    { path: "genre.name", label: "Genre" },
-    { path: "numberInStock", label: "Stock" },
-    { path: "dailyRentalRate", label: "Rate" },
+    { path: "genre.name", label: "ژانر" },
+    { path: "numberInStock", label: "انبار" },
+    { path: "dailyRentalRate", label: "امتیاز" },
     {
       key: "like",
       content: movie => (
@@ -29,7 +29,7 @@ class MoviesTable extends Component {
         onClick={() => this.props.onDelete(movie)}
         className="btn btn-danger btn-sm"
       >
-        Delete
+        حذف
       </button>
     )
   };

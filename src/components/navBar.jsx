@@ -5,7 +5,7 @@ const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
-        Vidly
+        آرکومان
       </Link>
       <button
         className="navbar-toggler"
@@ -21,21 +21,21 @@ const NavBar = ({ user }) => {
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
           <NavLink className="nav-item nav-link" to="/movies">
-            Movies
+            فیلمها
           </NavLink>
           <NavLink className="nav-item nav-link" to="/customers">
-            Customers
+            مشتریان
           </NavLink>
           <NavLink className="nav-item nav-link" to="/rentals">
-            Rentals
+            امانات
           </NavLink>
           {!user && (
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/login">
-                Login
+                ورود
               </NavLink>
               <NavLink className="nav-item nav-link" to="/register">
-                Register
+                عضویت
               </NavLink>
             </React.Fragment>
           )}
@@ -45,7 +45,7 @@ const NavBar = ({ user }) => {
                 {user.name}
               </NavLink>
               <NavLink className="nav-item nav-link" to="/logout">
-                Logout
+                خروج
               </NavLink>
             </React.Fragment>
           )}

@@ -13,10 +13,10 @@ class LoginForm extends Form {
   schema = {
     username: Joi.string()
       .required()
-      .label("Username"),
+      .label("ایمیل"),
     password: Joi.string()
       .required()
-      .label("Password")
+      .label("رمز عبور")
   };
 
   doSubmit = async () => {
@@ -40,11 +40,11 @@ class LoginForm extends Form {
 
     return (
       <div>
-        <h1>Login</h1>
+        <h1>ورود</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
+          {this.renderInput("username", "ایمیل")}
+          {this.renderInput("password", "‍رمز عبور", "password")}
+          {this.renderButton("ورود")}
         </form>
       </div>
     );

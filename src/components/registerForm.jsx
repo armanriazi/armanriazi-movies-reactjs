@@ -6,7 +6,7 @@ import auth from "../services/authService";
 
 class RegisterForm extends Form {
   state = {
-    data: { username: "", password: "", name: "" },
+    data: { username: "", password: ""},
     errors: {}
   };
 
@@ -14,14 +14,11 @@ class RegisterForm extends Form {
     username: Joi.string()
       .required()
       .email()
-      .label("Username"),
+      .label("ایمیل"),
     password: Joi.string()
       .required()
       .min(5)
-      .label("Password"),
-    name: Joi.string()
-      .required()
-      .label("Name")
+      .label("رمز عبور")
   };
 
   doSubmit = async () => {
@@ -41,12 +38,11 @@ class RegisterForm extends Form {
   render() {
     return (
       <div>
-        <h1>Register</h1>
+        <h1>عضویت</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("name", "Name")}
-          {this.renderButton("Register")}
+          {this.renderInput("username", "ایمیل")}
+          {this.renderInput("password", "رمز عبور", "password")}          
+          {this.renderButton("تایید عضویت")}
         </form>
       </div>
     );

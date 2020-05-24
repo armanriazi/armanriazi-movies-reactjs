@@ -23,7 +23,7 @@ class Movies extends Component {
 
   async componentDidMount() {
     const { data } = await getGenres();
-    const genres = [{ _id: "", name: "All Genres" }, ...data];
+    const genres = [{ _id: "", name: "همه ژانر ها" }, ...data];
     const { data: movies } = await getMovies();
     
     this.setState({ movies, genres });
@@ -38,7 +38,7 @@ class Movies extends Component {
       await deleteMovie(movie._id);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
-        toast.error("This movie has already been deleted.");
+        toast.error("این فیلم قبلا حذف شده است");
 
       this.setState({ movies: originalMovies });
     }
@@ -89,7 +89,7 @@ class Movies extends Component {
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]); 
     const movies = paginate(sorted, currentPage, pageSize);
-    var result=Object.create([]);
+    let result=Object.create([]);
     movies.map((i)=>result.push(i.doc));
     return { totalCount: filtered.length, data: result };
   };
@@ -99,7 +99,7 @@ class Movies extends Component {
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
     const { user } = this.props;
 
-    if (count === 0) return <p>There are no movies in the database.</p>;
+    if (count === 0) return <p>.هیچ فیلمی یافت نشد</p>;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -119,10 +119,10 @@ class Movies extends Component {
               className="btn btn-primary"
               style={{ marginBottom: 20 }}
             >
-              New Movie
+             فیلم جدید
             </Link>
           )}
-          <p>Showing {totalCount} movies in the database.</p>
+          <p>نمایش {totalCount} فیلم در بانک اطلاعاتی</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
             movies={movies}
