@@ -23,7 +23,9 @@ class Movies extends Component {
 
   async componentDidMount() {
     const { data } = await getGenres();
-    const genres = [{ _id: "", name: "همه ژانر ها" }, ...data];
+    let result=Object.create([]);
+    data.rows.map((i)=>result.push(i.doc));
+    const genres = [{ _id: "", name: "همه ژانر ها" }, ...result];
     const { data: movies } = await getMovies();
     
     this.setState({ movies, genres });
@@ -78,15 +80,14 @@ class Movies extends Component {
       movies: allMovies,
     } = this.state;
 
-    let filtered = allMovies.rows;
-    
+    let filtered = allMovies.rows; 
     if (searchQuery)
-      filtered = allMovies.filter((m) =>
-        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allMovies.rows.filter((m) =>        
+        m.doc.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     else if (selectedGenre && selectedGenre._id)
-      filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
-
+      filtered = allMovies.rows.filter((m) => m.doc.genreId === selectedGenre._id);
+      
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]); 
     const movies = paginate(sorted, currentPage, pageSize);
     let result=Object.create([]);

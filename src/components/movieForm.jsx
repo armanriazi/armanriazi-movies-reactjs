@@ -10,35 +10,35 @@ class MovieForm extends Form {
       title: "",
       genreId: "",
       numberInStock: "",
-      dailyRentalRate: ""
+      dailyRentalRate: "",
     },
     genres: [],
-    errors: {}
+    errors: {},
   };
 
   schema = {
     _id: Joi.string(),
-    title: Joi.string()
-      .required()
-      .label("Title"),
-    genreId: Joi.string()
-      .required()
-      .label("Genre"),
+    title: Joi.string().required().label("عنوان"),
+    genreId: Joi.string().required().label("ژانر"),
     numberInStock: Joi.number()
       .required()
       .min(0)
       .max(100)
-      .label("Number in Stock"),
+      .label("تعداد موجود در انبار"),
     dailyRentalRate: Joi.number()
       .required()
       .min(0)
       .max(10)
-      .label("Daily Rental Rate")
+      .label("امتیاز روزانه امانت"),
   };
 
   async populateGenres() {
-    const { data: genres } = await getGenres();
-    this.setState({ genres });
+     const genres = await getGenres();
+    const rows = genres.data.rows;
+    let result = Object.create([]);
+    rows.map((i) => result.push(i.doc));    
+    this.state.genres=result;
+    this.setState({ result });
   }
 
   async populateMovie() {
@@ -46,8 +46,11 @@ class MovieForm extends Form {
       const movieId = this.props.match.params.id;
       if (movieId === "new") return;
 
-      const { data: movie } = await getMovie(movieId);
-      this.setState({ data: this.mapToViewModel(movie) });
+      const { data: movie } = await getMovie(movieId);      
+      const rows = movie.data.rows;
+      let result = Object.create([]);
+      rows.map((i) => result.push(i.doc));    
+      this.setState({ data: this.mapToViewModel(result) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         this.props.history.replace("/not-found");
@@ -65,7 +68,7 @@ class MovieForm extends Form {
       title: movie.title,
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate
+      dailyRentalRate: movie.dailyRentalRate,
     };
   }
 
@@ -78,13 +81,13 @@ class MovieForm extends Form {
   render() {
     return (
       <div>
-        <h1>Movie Form</h1>
+        <h1>افزودن فیلم جدید</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("title", "Title")}
-          {this.renderSelect("genreId", "Genre", this.state.genres)}
-          {this.renderInput("numberInStock", "Number in Stock", "number")}
-          {this.renderInput("dailyRentalRate", "Rate")}
-          {this.renderButton("Save")}
+          {this.renderInput("title", "عنوان")}
+          {this.renderSelect("genreId", "ژانر", this.state.genres)}
+          {this.renderInput("numberInStock", "تعداد در انبار", "number")}
+          {this.renderInput("dailyRentalRate", "امتیاز")}
+          {this.renderButton("ذخیره")}
         </form>
       </div>
     );

@@ -3,29 +3,30 @@ import { Redirect } from "react-router-dom";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
-    errors: {}
+    errors: {},
   };
 
   schema = {
-    username: Joi.string()
-      .required()
-      .label("ایمیل"),
-    password: Joi.string()
-      .required()
-      .label("رمز عبور")
+    username: Joi.string().required().label("ایمیل"),
+    password: Joi.string().required().label("رمز عبور"),
   };
 
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      await auth.login(data.username, data.password);
-
-      const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
+      auth.login(data.username, data.password).then((response) => {
+        if (response.data.success) {
+          toast.info("با موفقیت ثبت شد");
+          localStorage.setItem("token", response.data.token);
+          const { state } = this.props.location;
+          window.location = state ? state.from.pathname : "/";
+        } else toast.error("از ورود اطلاعات خود اطمینان حاصل نمایید");
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
