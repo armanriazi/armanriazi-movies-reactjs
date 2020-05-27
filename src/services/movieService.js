@@ -17,6 +17,9 @@ export function getMovie(movieId) {
 
 export function saveMovie(movie) {    
   movie.genreId=movie.genreId.split(':')[1];
+
+  movie.id=movie.name=movie.title;
+  
   // if (movie.id) {
   //   const body = { ...movie };
   //   delete body.id;

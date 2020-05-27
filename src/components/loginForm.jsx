@@ -7,19 +7,19 @@ import { toast } from "react-toastify";
 
 class LoginForm extends Form {
   state = {
-    data: { username: "", password: "" },
+    data: { email: "", password: "" },
     errors: {},
   };
 
   schema = {
-    username: Joi.string().required().label("ایمیل"),
+    email: Joi.string().required().label("ایمیل"),
     password: Joi.string().required().label("رمز عبور"),
   };
 
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      auth.login(data.username, data.password).then((response) => {
+      auth.login(data.email, data.password).then((response) => {
         if (response.data.success) {
           toast.info("با موفقیت ثبت شد");
           localStorage.setItem("token", response.data.token);
@@ -30,7 +30,7 @@ class LoginForm extends Form {
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
+        errors.email = ex.response.data;
         this.setState({ errors });
       }
     }
@@ -43,7 +43,7 @@ class LoginForm extends Form {
       <div>
         <h1>ورود</h1>
         <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "ایمیل")}
+          {this.renderInput("email", "ایمیل")}
           {this.renderInput("password", "‍رمز عبور", "password")}
           {this.renderButton("ورود")}
         </form>

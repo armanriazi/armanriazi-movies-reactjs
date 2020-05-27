@@ -6,9 +6,7 @@ import { getGenres } from "../services/genreService";
 
 class MovieForm extends Form {
   state = {
-    data: {
-      id:"",
-      name:"",
+    data: {            
       title: "",
       genreId: "",
       numberInStock: "",
@@ -18,9 +16,7 @@ class MovieForm extends Form {
     errors: {},
   };
 
-  schema = {
-    id: Joi.string().min(3).max(25).label("ای دی"),
-    name: Joi.string().required().label("اسم"),
+  schema = {        
     title: Joi.string().required().label("عنوان"),
     genreId: Joi.string().required().label("ژانر"),
     numberInStock: Joi.number()
@@ -66,9 +62,7 @@ class MovieForm extends Form {
   }
 
   mapToViewModel(movie) {
-    return {
-      id: movie.id,
-      name: movie.name,
+    return {            
       title: movie.title,
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
@@ -85,9 +79,7 @@ class MovieForm extends Form {
     return (
       <div>
         <h1>افزودن فیلم جدید</h1>
-        <form onSubmit={this.handleSubmit}>
-        {this.renderInput("id", "ای دی")}
-        {this.renderInput("name", "اسم")}
+        <form onSubmit={this.handleSubmit}>                  
           {this.renderInput("title", "عنوان")}
           {this.renderSelect("genreId", "ژانر", this.state.genres)}
           {this.renderInput("numberInStock", "تعداد در انبار", "number")}

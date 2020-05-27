@@ -1,23 +1,41 @@
 import axios from "axios";
 import logger from "./logService";
 import { toast } from "react-toastify";
+import { getCurrentUser, logout } from "./authService";
 
-axios.interceptors.response.use(null, error => {
-  const expectedError =
-    error.response &&
-    error.response.status === 4 &&
-    error.response.status === 44 &&
-    error.response.status === -4 &&
-    error.response.status >= 400 &&
-    error.response.status < 500;
+axios.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  (error) => {
+    try {
+      var current_time = new Date().getTime() / 1000;
+      const exp = getCurrentUser().exp;
 
-  if (!expectedError) {    
-    logger.log(error);
-    toast.error("خطایی بوجود آمد لطفا بعدا مراجعه فرماپید");
+      if (current_time > exp) {
+        toast.error("زمان شما به اتمام رسیده است لطفا مجدد وارد شوید");
+        logout();
+        Promise.reject(error);
+        window.location = "/login";
+      }
+    } catch (e) {}
+
+    const expectedError =
+      error.response &&
+      error.response.status === 4 &&
+      error.response.status === 44 &&
+      error.response.status === -4 &&
+      error.response.status >= 400 &&
+      error.response.status < 500;
+    console.log(error);
+    if (!expectedError) {
+      logger.log(error);
+      toast.error("خطایی بوجود آمد لطفا بعدا مراجعه فرمایید");
+    }
+
+    return Promise.reject(error);
   }
-
-  return Promise.reject(error);
-});
+);
 
 function setJwt(jwt) {
   axios.defaults.headers.common["x-auth-token"] = jwt;
@@ -29,7 +47,7 @@ export default {
   post: axios.post,
   put: axios.put,
   delete: axios.delete,
-  setJwt
+  setJwt,
 };
 
 /*

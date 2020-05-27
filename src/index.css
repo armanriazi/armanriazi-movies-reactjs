@@ -19,6 +19,10 @@ body {
 
 }
 
+/* input[type=text]{
+  width: 100px;
+} */
+
 *{
   direction:rtl;  
 }

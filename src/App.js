@@ -19,8 +19,14 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    const user = auth.getCurrentUser();
+    let user = auth.getCurrentUser();
+    try{    
+    delete user.password;        
+    console.log(user);
+    }catch(e){}
+    //console.log(new Date(user.iat*1000).toUTCString());
     this.setState({ user });
+     
   }
 
   render() {
