@@ -1,9 +1,27 @@
-body {
-  margin: 0;
-  padding: 0 0 0 0;
-  font-family: sans-serif;
+
+@font-face {
+  font-family: "Nazanin";
+  src: local("Nazanin"), url(./fonts/Nazanin.woff) format("woff");
 }
 
+html {
+  font-family: 'Nazanin';
+  font-size: 14px;
+  direction: rtl;
+  text-align:right;  
+
+}
+body {
+  direction:rtl;  
+  margin: 0;
+  padding: 0 0 0 0;
+  font-family: Nazanin, tahoma, arial;
+
+}
+
+*{
+  direction:rtl;  
+}
 .navbar {
   margin-bottom: 30px;
 }

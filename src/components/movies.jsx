@@ -23,11 +23,13 @@ class Movies extends Component {
 
   async componentDidMount() {
     const { data } = await getGenres();
-    let result=Object.create([]);
-    data.rows.map((i)=>result.push(i.doc));
-    const genres = [{ _id: "", name: "همه ژانر ها" }, ...result];
-    const { data: movies } = await getMovies();
-    
+    let result = Object.create([]);
+    data.rows.map((i) => result.push(i.doc));
+    const genres = [{ _id: "", name: "ژانر ها" }, ...result];
+    const { data: allMovies } = await getMovies();
+    const rows = allMovies.rows;
+    let movies = Object.create([]);
+    rows.map((i) => movies.push(i.doc));
     this.setState({ movies, genres });
   }
 
@@ -80,19 +82,19 @@ class Movies extends Component {
       movies: allMovies,
     } = this.state;
 
-    let filtered = allMovies.rows; 
+    var filtered = allMovies;
+
     if (searchQuery)
-      filtered = allMovies.rows.filter((m) =>        
-        m.doc.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allMovies.filter((m) =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     else if (selectedGenre && selectedGenre._id)
-      filtered = allMovies.rows.filter((m) => m.doc.genreId === selectedGenre._id);
-      
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]); 
-    const movies = paginate(sorted, currentPage, pageSize);
-    let result=Object.create([]);
-    movies.map((i)=>result.push(i.doc));
-    return { totalCount: filtered.length, data: result };
+      filtered = allMovies.filter((m) => m.genreId === selectedGenre._id);
+
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const paginated = paginate(sorted, currentPage, pageSize);
+
+    return { totalCount: _.size(filtered), data: paginated };
   };
 
   render() {
@@ -105,7 +107,7 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     return (
-      <div className="row">
+      <div className="row" dir="rtl">
         <div className="col-3">
           <ListGroup
             items={this.state.genres}
@@ -120,10 +122,11 @@ class Movies extends Component {
               className="btn btn-primary"
               style={{ marginBottom: 20 }}
             >
-             فیلم جدید
+              فیلم جدید
             </Link>
           )}
-          <p>نمایش {totalCount} فیلم در بانک اطلاعاتی</p>
+          
+            <p>نمایش {totalCount} فیلم در بانک اطلاعاتی</p>          
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
             movies={movies}
