@@ -102,7 +102,7 @@ class Movies extends Component {
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
     const { user } = this.props;
 
-    if (count === 0) return <p>.هیچ فیلمی یافت نشد</p>;
+    if (count === 0) return <p>لطفا منتظر بمانید</p>;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -125,8 +125,8 @@ class Movies extends Component {
               فیلم جدید
             </Link>
           )}
-          
-            <p>نمایش {totalCount} فیلم در بانک اطلاعاتی</p>          
+
+          <p>نمایش {totalCount} فیلم در بانک اطلاعاتی</p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
             movies={movies}

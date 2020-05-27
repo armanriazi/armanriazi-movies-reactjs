@@ -7,6 +7,8 @@ import { getGenres } from "../services/genreService";
 class MovieForm extends Form {
   state = {
     data: {
+      id:"",
+      name:"",
       title: "",
       genreId: "",
       numberInStock: "",
@@ -17,7 +19,8 @@ class MovieForm extends Form {
   };
 
   schema = {
-    _id: Joi.string(),
+    id: Joi.string().min(3).max(25).label("ای دی"),
+    name: Joi.string().required().label("اسم"),
     title: Joi.string().required().label("عنوان"),
     genreId: Joi.string().required().label("ژانر"),
     numberInStock: Joi.number()
@@ -33,7 +36,7 @@ class MovieForm extends Form {
   };
 
   async populateGenres() {
-     const genres = await getGenres();
+    const genres = await getGenres();
     const rows = genres.data.rows;
     let result = Object.create([]);
     rows.map((i) => result.push(i.doc));    
@@ -49,7 +52,7 @@ class MovieForm extends Form {
       const { data: movie } = await getMovie(movieId);      
       const rows = movie.data.rows;
       let result = Object.create([]);
-      rows.map((i) => result.push(i.doc));    
+      rows.map((i) => result.push(i.doc));          
       this.setState({ data: this.mapToViewModel(result) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
@@ -64,7 +67,8 @@ class MovieForm extends Form {
 
   mapToViewModel(movie) {
     return {
-      _id: movie._id,
+      id: movie.id,
+      name: movie.name,
       title: movie.title,
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
@@ -72,9 +76,8 @@ class MovieForm extends Form {
     };
   }
 
-  doSubmit = async () => {
+  doSubmit = async () => {    
     await saveMovie(this.state.data);
-
     this.props.history.push("/movies");
   };
 
@@ -83,10 +86,12 @@ class MovieForm extends Form {
       <div>
         <h1>افزودن فیلم جدید</h1>
         <form onSubmit={this.handleSubmit}>
+        {this.renderInput("id", "ای دی")}
+        {this.renderInput("name", "اسم")}
           {this.renderInput("title", "عنوان")}
           {this.renderSelect("genreId", "ژانر", this.state.genres)}
           {this.renderInput("numberInStock", "تعداد در انبار", "number")}
-          {this.renderInput("dailyRentalRate", "امتیاز")}
+          {this.renderInput("dailyRentalRate", "مقدار کرایه در روز")}
           {this.renderButton("ذخیره")}
         </form>
       </div>

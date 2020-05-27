@@ -15,15 +15,15 @@ export function getMovie(movieId) {
   return http.get(movieUrl(movieId));
 }
 
-export function saveMovie(movie) {
-
-  if (movie._id) {
-    const body = { ...movie };
-    delete body._id;
-    return http.put(movieUrl(movie._id), body);
-  }
-
-  return http.post(apiEndpoint, movie);
+export function saveMovie(movie) {    
+  movie.genreId=movie.genreId.split(':')[1];
+  // if (movie.id) {
+  //   const body = { ...movie };
+  //   delete body.id;
+  //   return http.put(movieUrl(movie.id), body);
+  // }
+  // console.log(movie);
+  return http.put(apiEndpoint, movie);
 }
 
 export function deleteMovie(movieId) {
