@@ -12,7 +12,7 @@
 
 [Gothub Repository](https://github.com/armanriazi/armanriazi-movies-reactjs)
 
-![Build Status](https://drive.google.com/file/d/1W5nSlFYGxQoyDmaiZDTkD9Cccxs5TiG-/view?usp=sharing)
+<img src="https://drive.google.com/file/d/1W5nSlFYGxQoyDmaiZDTkD9Cccxs5TiG-/view?usp=sharing"/>
 
 - [Advanced Configuration](#advanced-configuration)
 - [Troubleshooting](#troubleshooting)
