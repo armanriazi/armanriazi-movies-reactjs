@@ -10,9 +10,9 @@
 
 > I have got satisfied with mix of couchdb and reactjs! Why not! both of them are good choice for frontend and database with o/i json.
 
-[Gothub Repository](https://github.com/armanriazi/armanriazi-movies-reactjs)
+[Github Repository](https://github.com/armanriazi/armanriazi-movies-reactjs)
 
-<img src="https://drive.google.com/file/d/1W5nSlFYGxQoyDmaiZDTkD9Cccxs5TiG-/view?usp=sharing"/>
+[Build Status](https://drive.google.com/file/d/1W5nSlFYGxQoyDmaiZDTkD9Cccxs5TiG-/view?usp=sharing")
 
 - [Advanced Configuration](#advanced-configuration)
 - [Troubleshooting](#troubleshooting)
